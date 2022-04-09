@@ -92,5 +92,4 @@ openapi
 #vscode
 .vscode
 
-/app
-/swagger
+.class-gen

@@ -4,3 +4,8 @@ declare const commander: any;
 declare const ejs: any;
 declare const inflector: any;
 declare var pkg: any;
+declare function makeDir(src: string, filename: string): void;
+declare function initialize(): void;
+declare function generator(type: string): void;
+declare function render(base: string, src: string, dist: string, filename: string): void;
+declare function readdir(base: string, src: string, dist: string): void;

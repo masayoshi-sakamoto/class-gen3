@@ -1,11 +1,12 @@
 {
   "name": "@masayoshi-sakamoto/class-gen3",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "bin": {
     "class-gen": "./bin/class-gen.js"
   },
   "license": "MIT",
   "scripts": {
+    "dev": "ts-node ./src/index.ts",
     "build": "tsc",
     "release": "npm publish --access=public"
   },
