@@ -13,17 +13,11 @@ try {
     .option('-j, --japanese <japanese>', 'japanese name')
     .option('-t, --title <title>', 'title name')
 
-  commander.app = 'app'
-  commander.swagger = 'swagger'
-  commander.templates = path.resolve(__dirname, '../templates/')
-  commander.dist = commander.dist ? path.resolve(__dirname, '../' + commander.dist + '/') : './'
-  commander.appname = !commander.appname ? 'application' : commander.appname
-  commander.appName = commander.appname.charAt(0).toUpperCase() + commander.appname.slice(1)
-
   /**
    * 初期化処理
    */
   commander.command('initialize').action(() => {
+    init()
     initialize()
   })
 
@@ -31,6 +25,15 @@ try {
 } catch (e) {
   console.error(e)
   process.exit(2)
+}
+
+function init() {
+  commander.app = 'app'
+  commander.swagger = 'swagger'
+  commander.templates = path.resolve(__dirname, '../templates/')
+  commander.dist = commander.dist ? path.resolve(__dirname, '../' + commander.dist + '/') : './'
+  commander.appname = !commander.appname ? 'application' : commander.appname
+  commander.appName = commander.appname.charAt(0).toUpperCase() + commander.appname.slice(1)
 }
 
 function makeDir(src: string, filename: string) {
