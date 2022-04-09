@@ -12,23 +12,27 @@ try {
         .option('-a, --appname <appname>', 'application name')
         .option('-j, --japanese <japanese>', 'japanese name')
         .option('-t, --title <title>', 'title name');
-    commander.app = 'app';
-    commander.swagger = 'swagger';
-    commander.templates = path.resolve(__dirname, '../templates/');
-    commander.dist = commander.dist ? path.resolve(__dirname, '../' + commander.dist + '/') : './';
-    commander.appname = !commander.appname ? 'application' : commander.appname;
-    commander.appName = commander.appname.charAt(0).toUpperCase() + commander.appname.slice(1);
     /**
      * 初期化処理
      */
     commander.command('initialize').action(() => {
-        initialize();
+        init();
+        generator('initialize');
+        generator('injector');
     });
     commander.parse(process.argv);
 }
 catch (e) {
     console.error(e);
     process.exit(2);
+}
+function init() {
+    commander.app = 'app';
+    commander.swagger = 'swagger';
+    commander.templates = path.resolve(__dirname, '../templates/');
+    commander.dist = commander.dist ? path.resolve(__dirname, '../' + commander.dist + '/') : './';
+    commander.appname = !commander.appname ? 'application' : commander.appname;
+    commander.appName = commander.appname.charAt(0).toUpperCase() + commander.appname.slice(1);
 }
 function makeDir(src, filename) {
     if (!fs.existsSync(commander.dist)) {
@@ -38,18 +42,32 @@ function makeDir(src, filename) {
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
     }
-}
-function initialize() {
-    const type = 'initialize';
-    generator(type);
+    return dir;
 }
 function generator(type) {
+    commander.opts = {
+        appName: commander.appName,
+        repositories: fs.readdirSync(makeDir(commander.app, 'repositories')),
+        gateways: fs.readdirSync(makeDir(commander.app, 'gateways')),
+        gatewayFiles: fs.readdirSync(makeDir(makeDir(commander.app, 'gateways'), commander.appName)),
+        storeFiles: fs.readdirSync(makeDir(commander.app, 'store')),
+        schemasFiles: fs
+            .readdirSync(makeDir(makeDir(makeDir(commander.swagger, 'src'), 'components'), 'schemas'), { withFileTypes: true })
+            .filter((prop) => prop.isDirectory())
+            .map((prop) => {
+            return fs.readdirSync(makeDir(makeDir(makeDir(makeDir(commander.swagger, 'src'), 'components'), 'schemas'), prop));
+        }),
+        pathsFiles: fs
+            .readdirSync(makeDir(makeDir(commander.swagger, 'src'), 'paths'), { withFileTypes: true })
+            .filter((prop) => prop.isDirectory())
+            .map((prop) => {
+            return fs.readdirSync(makeDir(makeDir(makeDir(commander.swagger, 'src'), 'paths'), prop));
+        })
+    };
     readdir(path.join(commander.templates, type), './', './');
 }
 function render(base, src, dist, filename) {
-    const content = ejs.render(fs.readFileSync(path.resolve(base, path.join(src, filename)), 'utf-8'), {
-        appName: commander.appName
-    });
+    const content = ejs.render(fs.readFileSync(path.resolve(base, path.join(src, filename)), 'utf-8'), commander.opts);
     const filepath = path.resolve(commander.dist, path.join(dist, filename));
     fs.writeFileSync(filepath, content, { encoding: 'utf-8', flag: 'w+' });
     console.log('Generated:', filepath);

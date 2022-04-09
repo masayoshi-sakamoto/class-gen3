@@ -18,7 +18,8 @@ try {
    */
   commander.command('initialize').action(() => {
     init()
-    initialize()
+    generator('initialize')
+    generator('injector')
   })
 
   commander.parse(process.argv)
@@ -44,21 +45,34 @@ function makeDir(src: string, filename: string) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
   }
-}
-
-function initialize() {
-  const type = 'initialize'
-  generator(type)
+  return dir
 }
 
 function generator(type: string) {
+  commander.opts = {
+    appName: commander.appName,
+    repositories: fs.readdirSync(makeDir(commander.app, 'repositories')),
+    gateways: fs.readdirSync(makeDir(commander.app, 'gateways')),
+    gatewayFiles: fs.readdirSync(makeDir(makeDir(commander.app, 'gateways'), commander.appName)),
+    storeFiles: fs.readdirSync(makeDir(commander.app, 'store')),
+    schemasFiles: fs
+      .readdirSync(makeDir(makeDir(makeDir(commander.swagger, 'src'), 'components'), 'schemas'), { withFileTypes: true })
+      .filter((prop: any) => prop.isDirectory())
+      .map((prop: any) => {
+        return fs.readdirSync(makeDir(makeDir(makeDir(makeDir(commander.swagger, 'src'), 'components'), 'schemas'), prop))
+      }),
+    pathsFiles: fs
+      .readdirSync(makeDir(makeDir(commander.swagger, 'src'), 'paths'), { withFileTypes: true })
+      .filter((prop: any) => prop.isDirectory())
+      .map((prop: any) => {
+        return fs.readdirSync(makeDir(makeDir(makeDir(commander.swagger, 'src'), 'paths'), prop))
+      })
+  }
   readdir(path.join(commander.templates, type), './', './')
 }
 
 function render(base: string, src: string, dist: string, filename: string) {
-  const content = ejs.render(fs.readFileSync(path.resolve(base, path.join(src, filename)), 'utf-8'), {
-    appName: commander.appName
-  })
+  const content = ejs.render(fs.readFileSync(path.resolve(base, path.join(src, filename)), 'utf-8'), commander.opts)
   const filepath = path.resolve(commander.dist, path.join(dist, filename))
   fs.writeFileSync(filepath, content, { encoding: 'utf-8', flag: 'w+' })
   console.log('Generated:', filepath)

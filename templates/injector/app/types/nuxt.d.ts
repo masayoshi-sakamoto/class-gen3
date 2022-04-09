@@ -14,9 +14,6 @@ import <%= repository %> from '@/repositories/<%= repository %>'
 import <%= gateway %>Gateway from '@/gateways/<%= gateway %>'
 <%_ }); _%>
 
-// Services
-import LogService from '@/services/LogService'
-
 declare module 'vuex/types/index' {
   interface ActionTree<S, R> {
     nuxtServerInit: (context: ActionContext<S, R>, nuxtContext: Context) => void
@@ -40,9 +37,6 @@ export interface IApp {
   <%_ gateways.forEach((gateway) => { _%>
   <%= gateway.toLowerCase() %>Gateway: <%= gateway %>Gateway
   <%_ }); _%>
-
-  // Services
-  logService: LogService
 }
 
 declare module 'vue/types/vue' {
