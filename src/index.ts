@@ -59,13 +59,19 @@ function generator(type: string) {
       .readdirSync(makeDir(makeDir(makeDir(commander.swagger, 'src'), 'components'), 'schemas'), { withFileTypes: true })
       .filter((prop: any) => prop.isDirectory())
       .map((prop: any) => {
-        return fs.readdirSync(makeDir(makeDir(makeDir(makeDir(commander.swagger, 'src'), 'components'), 'schemas'), prop))
+        return {
+          key: prop.name,
+          values: fs.readdirSync(makeDir(makeDir(makeDir(makeDir(commander.swagger, 'src'), 'components'), 'schemas'), prop.name))
+        }
       }),
     pathsFiles: fs
       .readdirSync(makeDir(makeDir(commander.swagger, 'src'), 'paths'), { withFileTypes: true })
       .filter((prop: any) => prop.isDirectory())
       .map((prop: any) => {
-        return fs.readdirSync(makeDir(makeDir(makeDir(commander.swagger, 'src'), 'paths'), prop))
+        return {
+          key: prop.name,
+          values: fs.readdirSync(makeDir(makeDir(makeDir(commander.swagger, 'src'), 'paths'), prop.name))
+        }
       })
   }
   readdir(path.join(commander.templates, type), './', './')

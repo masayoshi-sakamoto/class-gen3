@@ -1,7 +1,7 @@
-<%_ Object.entries(schemasFiles).forEach(([key, values]) => {
-  const ClassName = key.charAt(0).toUpperCase() + key.slice(1)
+<%_ schemasFiles.forEach((prop) => {
+  const ClassName = prop.key.charAt(0).toUpperCase() + prop.key.slice(1)
 _%>
-<%_ values.forEach((file) => {
+<%_ prop.values.forEach((file) => {
     const fileName = file.split('.')[0]
     const names = fileName.split('_')
     let FileName = ''
@@ -11,10 +11,10 @@ _%>
 _%>
 <%_ if (fileName === 'index') {_%>
 <%= ClassName %>:
-  $ref: './<%= key %>/index.yml'
+  $ref: './<%= prop.key %>/index.yml'
 <%_ } else {_%>
 <%= ClassName %><%= FileName %>:
-  $ref: './<%= key %>/<%= fileName %>.yml'
+  $ref: './<%= prop.key %>/<%= fileName %>.yml'
 <%_ } _%>
 <%_ }); _%>
 
