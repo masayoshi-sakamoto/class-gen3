@@ -9,9 +9,9 @@ try {
   commander
     .version(pkg.version)
     .option('-d, --dist <dist>', 'output directory')
-    .option('-a, --appname <appname>', 'application name')
-    .option('-j, --japanese <japanese>', 'japanese name')
-    .option('-t, --title <title>', 'title name')
+    .option('-t, --type <type>', 'template type choices (web, admin)', /^(web|admin)$/i, 'web')
+    .option('-a, --appname <appname>', 'application name', 'application')
+    .option('--auth [model]', 'authenticate flag', 'users')
 
   /**
    * 初期化処理
@@ -20,6 +20,18 @@ try {
     init()
     generator('initialize')
     generator('injector')
+    generator(commander.type)
+    if (commander.auth) {
+      generator(commander.type + '-auth')
+    }
+  })
+
+  /**
+   * 初期化処理
+   */
+  commander.command('auth').action(() => {
+    init()
+    generator('auth')
   })
 
   commander.parse(process.argv)
@@ -33,8 +45,10 @@ function init() {
   commander.swagger = 'swagger'
   commander.templates = path.resolve(__dirname, '../templates/')
   commander.dist = commander.dist ? path.resolve(__dirname, '../' + commander.dist + '/') : './'
-  commander.appname = !commander.appname ? 'application' : commander.appname
   commander.appName = commander.appname.charAt(0).toUpperCase() + commander.appname.slice(1)
+
+  makeDir('./', commander.app)
+  makeDir('./', commander.swagger)
 }
 
 function makeDir(src: string, filename: string) {

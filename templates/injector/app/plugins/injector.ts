@@ -20,17 +20,6 @@ import <%= repository %> from '@/repositories/<%= repository %>'
 import <%= gateway %>Gateway from '@/gateways/<%= gateway %>'
 <%_ }); _%>
 
-// Services
-import LogService from '@/services/LogService'
-
-// FIXME
-const dummyLogger = {
-  captureException(params: Error | string) {
-    console.log('/// logging with dummy logger ///')
-    console.log(params)
-  }
-}
-
 export default (ctx: Context) => {
   const { store, app } = ctx
   <%_ gateways.forEach((gateway) => { _%>
@@ -49,7 +38,6 @@ export default (ctx: Context) => {
     <%_ gateways.forEach((gateway) => { _%>
     <%= gateway.toLowerCase() %>Gateway: new <%= gateway %>Gateway(<%= gateway.toLowerCase() %>APIClient),
     <%_ }); _%>
-    logService: new LogService(dummyLogger /* app.$sentry */)
   }
 
   ctx.App = {
@@ -64,6 +52,5 @@ export default (ctx: Context) => {
     <%_ gateways.forEach((gateway) => { _%>
     <%= gateway.toLowerCase() %>Gateway: new <%= gateway %>Gateway(<%= gateway.toLowerCase() %>APIClient),
     <%_ }); _%>
-    logService: new LogService(dummyLogger /* app.$sentry */)
   }
 }

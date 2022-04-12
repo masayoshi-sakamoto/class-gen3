@@ -1,5 +1,5 @@
 <template>
-  <LayoutApp>
+  <LayoutAuth>
     <v-container fluid>
       <div class="text-center">
         <div class="logo-lg mb-4">{{ error.statusCode }}</div>
@@ -9,16 +9,16 @@
         </div>
       </div>
     </v-container>
-  </LayoutApp>
+  </LayoutAuth>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import LayoutApp from '@/components/organisms/Layout/App'
+import LayoutAuth from '@/components/organisms/Layout/Auth'
 
 export default Vue.extend({
   components: {
-    LayoutApp
+    LayoutAuth
   },
   props: {
     error: {
