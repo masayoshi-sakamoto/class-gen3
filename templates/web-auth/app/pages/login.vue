@@ -42,7 +42,9 @@ export default Vue.extend({
   },
   methods: {
     async save() {
-      await new LoginUseCase(this.App).execute(this.value)
+      if (await new LoginUseCase(this.App).execute(this.value)) {
+        this.$router.push('/')
+      }
     }
   }
 })

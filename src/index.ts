@@ -19,19 +19,19 @@ try {
   commander.command('initialize').action(() => {
     init()
     generator('initialize')
-    generator('injector')
     generator(commander.type)
     if (commander.auth) {
       generator(commander.type + '-auth')
     }
+    generator('injector')
   })
 
   /**
-   * 初期化処理
+   * インデックス作成
    */
-  commander.command('auth').action(() => {
+  commander.command('injector').action(() => {
     init()
-    generator('auth')
+    generator('injector')
   })
 
   commander.parse(process.argv)

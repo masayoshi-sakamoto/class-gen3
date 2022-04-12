@@ -12,7 +12,7 @@
         </v-col>
         <v-col cols="3" align-self="center" class="text-right">
           <v-btn text to="/login">ログイン</v-btn>
-          <v-btn min-width="100" rounded color="primary" to="/signup">登録</v-btn>
+          <v-btn rounded depressed min-width="100" color="primary" to="/signup">登録</v-btn>
         </v-col>
       </v-row>
     </v-container>

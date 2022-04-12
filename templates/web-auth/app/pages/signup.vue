@@ -45,7 +45,9 @@ export default Vue.extend({
   },
   methods: {
     async save() {
-      await new SignupUseCase(this.App).execute(this.value)
+      if (await new SignupUseCase(this.App).execute(this.value)) {
+        this.$router.push('/')
+      }
     }
   }
 })

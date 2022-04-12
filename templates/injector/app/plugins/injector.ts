@@ -33,10 +33,10 @@ export default (ctx: Context) => {
       if (repository !== 'AppRepository') {
         const word = repository.split('Repository')[0].toLowerCase()
     _%>
-    <%= word %>: new <%= repository %>(store),
+    <%= word %>: new <%= repository %>(app.$cookies, store),
     <%_ }}); _%>
     <%_ gateways.forEach((gateway) => { _%>
-    <%= gateway.toLowerCase() %>Gateway: new <%= gateway %>Gateway(<%= gateway.toLowerCase() %>APIClient),
+    <%= gateway.toLowerCase() %>Gateway: new <%= gateway %>Gateway(<%= gateway.toLowerCase() %>APIClient)
     <%_ }); _%>
   }
 
@@ -47,10 +47,10 @@ export default (ctx: Context) => {
       if (repository !== 'AppRepository') {
         const word = repository.split('Repository')[0].toLowerCase()
     _%>
-    <%= word %>: new <%= repository %>(store),
+    <%= word %>: new <%= repository %>(app.$cookies, store),
     <%_ }}); _%>
     <%_ gateways.forEach((gateway) => { _%>
-    <%= gateway.toLowerCase() %>Gateway: new <%= gateway %>Gateway(<%= gateway.toLowerCase() %>APIClient),
+    <%= gateway.toLowerCase() %>Gateway: new <%= gateway %>Gateway(<%= gateway.toLowerCase() %>APIClient)
     <%_ }); _%>
   }
 }

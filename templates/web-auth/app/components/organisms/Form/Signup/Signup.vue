@@ -1,8 +1,8 @@
 <template>
-  <validation-observer ref="observer" v-slot="{ invalid }">
-    <v-form>
+  <validation-observer ref="observer" v-slot="{ passes, invalid }">
+    <v-form @submit.prevent="passes(submit)">
       <validation-provider v-slot="{ errors }" name="メールアドレス" rules="required|email">
-        <v-text-field v-model="props.username" label="メールアドレス" outlined :error-messages="errors"></v-text-field>
+        <v-text-field v-model="props.username" label="メールアドレス" outlined :error-messages="App.state.errors.username || errors"></v-text-field>
       </validation-provider>
       <validation-provider v-slot="{ errors }" name="パスワード" rules="required|min:8">
         <v-text-field
@@ -12,7 +12,7 @@
           counter
           :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
           :type="show ? 'text' : 'password'"
-          :error-messages="errors"
+          :error-messages="App.state.errors.password || errors"
           @click:append="show = !show"
         ></v-text-field>
       </validation-provider>
@@ -46,6 +46,7 @@ export default Vue.extend({
   watch: {
     value: {
       handler() {
+        this.cancel()
         this.props = this.value.clone.props
       },
       immediate: true
@@ -58,7 +59,10 @@ export default Vue.extend({
     },
     cancel() {
       const refs: any = this.$refs
-      refs.observer.reset()
+      if (refs.observer) {
+        refs.observer.reset()
+      }
+      this.App.state.errors = []
     }
   }
 })
