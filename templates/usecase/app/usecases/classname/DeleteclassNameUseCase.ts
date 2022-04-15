@@ -3,7 +3,7 @@ import <%= className %>Entity from '@/entities/<%= className %>'
 import RefreshUseCase from '@/usecases/RefreshUseCase'
 
 export default class Delete<%= className %>UseCase extends RefreshUseCase implements BaseUseCase {
-  app: IApp
+  App: IApp
   constructor(app: IApp) {
     super()
     this.App = app

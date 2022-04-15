@@ -2,7 +2,7 @@ import { IApp } from '@/types/nuxt'
 import RefreshUseCase from '@/usecases/RefreshUseCase'
 
 export default class Fetch<%= classNames %>UseCase extends RefreshUseCase implements BaseUseCase {
-  app: IApp
+  App: IApp
   constructor(app: IApp) {
     super()
     this.App = app
