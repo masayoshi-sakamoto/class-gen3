@@ -1,3 +1,4 @@
+import { NuxtCookies } from 'cookie-universal-nuxt'
 import { Store } from 'vuex'
 import { RootState } from '@/store'
 import * as types from '@/store/<%= className.toLowerCase() %>/types'
@@ -6,9 +7,10 @@ import <%= className %>Entity, { Empty<%= className %>EntityFactory, I<%= classN
 import { IQueryProps } from '@/entities/Query'
 
 export default class <%= className %>Repository {
+  private cookies: NuxtCookies
   private _store: Store<RootState>
 
-  constructor(store: Store<RootState>) {
+  constructor(cookies: NuxtCookies, store: Store<RootState>) {
     this._store = store
   }
 
