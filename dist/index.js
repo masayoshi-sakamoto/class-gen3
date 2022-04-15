@@ -32,6 +32,25 @@ try {
         generator('injector');
     });
     /**
+     * generate
+     */
+    commander.command('generate [className]').action((className) => {
+        if (!className) {
+            console.error('className is required.');
+            return;
+        }
+        commander.className = className;
+        init();
+        generator('entity');
+        generator('store');
+        generator('repositories');
+        generator('gateway');
+        generator('infrastructure');
+        generator('swagger');
+        generator('injector');
+        generator('usecase');
+    });
+    /**
      * entity作成
      */
     commander.command('entity [className]').action((className) => {
@@ -137,9 +156,7 @@ function render(base, src, dist) {
 function readdir(base, src, dist) {
     const files = fs.readdirSync(path.resolve(base, src), { withFileTypes: true });
     for (const file of files) {
-        console.log(file.name);
         const name = file.name.split(/(?=\.[^.]+$)/);
-        console.log(name);
         name[0] = name[0].replace(/appName/, commander.appName);
         name[0] = name[0].replace(/classNames/, inflector.pluralize(commander.className));
         name[0] = name[0].replace(/className/, commander.className);

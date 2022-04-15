@@ -46,7 +46,7 @@ try {
     init()
     generator('entity')
     generator('store')
-    generator('repositories')
+    generator('repository')
     generator('gateway')
     generator('infrastructure')
     generator('swagger')
@@ -78,7 +78,7 @@ try {
     commander.className = className
     init()
     generator('store')
-    generator('repositories')
+    generator('repository')
   })
 
   /**
