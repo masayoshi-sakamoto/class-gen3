@@ -18,18 +18,59 @@ try {
     commander.command('initialize').action(() => {
         init();
         generator('initialize');
-        generator('injector');
         generator(commander.type);
         if (commander.auth) {
             generator(commander.type + '-auth');
         }
+        generator('injector');
     });
     /**
-     * 初期化処理
+     * インデックス作成
      */
-    commander.command('auth').action(() => {
+    commander.command('index').action(() => {
         init();
-        generator('auth');
+        generator('injector');
+    });
+    /**
+     * entity作成
+     */
+    commander.command('entity [className]').action((className) => {
+        if (!className) {
+            console.error('className is required.');
+            return;
+        }
+        commander.className = className;
+        init();
+        generator('entity');
+    });
+    /**
+     * store作成
+     */
+    commander.command('store [className]').action((className) => {
+        if (!className) {
+            console.error('className is required.');
+            return;
+        }
+        commander.className = className;
+        init();
+        generator('store');
+        generator('repositories');
+    });
+    /**
+     * gateway作成
+     */
+    commander.command('gateway [className]').action((className) => {
+        if (!className) {
+            console.error('className is required.');
+            return;
+        }
+        commander.className = className;
+        init();
+        generator('gateway');
+        generator('infrastructure');
+        generator('swagger');
+        generator('injector');
+        generator('usecase');
     });
     commander.parse(process.argv);
 }
@@ -43,6 +84,7 @@ function init() {
     commander.templates = path.resolve(__dirname, '../templates/');
     commander.dist = commander.dist ? path.resolve(__dirname, '../' + commander.dist + '/') : './';
     commander.appName = commander.appname.charAt(0).toUpperCase() + commander.appname.slice(1);
+    commander.className = commander.className ? commander.className.charAt(0).toUpperCase() + commander.className.slice(1) : '';
     makeDir('./', commander.app);
     makeDir('./', commander.swagger);
 }
@@ -59,6 +101,8 @@ function makeDir(src, filename) {
 function generator(type) {
     commander.opts = {
         appName: commander.appName,
+        className: commander.className,
+        classNames: inflector.pluralize(commander.className),
         repositories: fs.readdirSync(makeDir(commander.app, 'repositories')),
         gateways: fs.readdirSync(makeDir(commander.app, 'gateways')),
         gatewayFiles: fs.readdirSync(makeDir(makeDir(commander.app, 'gateways'), commander.appName)),
@@ -84,22 +128,29 @@ function generator(type) {
     };
     readdir(path.join(commander.templates, type), './', './');
 }
-function render(base, src, dist, filename) {
-    const content = ejs.render(fs.readFileSync(path.resolve(base, path.join(src, filename)), 'utf-8'), commander.opts);
-    const filepath = path.resolve(commander.dist, path.join(dist, filename));
+function render(base, src, dist) {
+    const content = ejs.render(fs.readFileSync(path.resolve(base, src), 'utf-8'), commander.opts);
+    const filepath = path.resolve(commander.dist, dist);
     fs.writeFileSync(filepath, content, { encoding: 'utf-8', flag: 'w+' });
     console.log('Generated:', filepath);
 }
 function readdir(base, src, dist) {
     const files = fs.readdirSync(path.resolve(base, src), { withFileTypes: true });
     for (const file of files) {
-        const filename = file.name === 'appName' ? commander.appName : file.name;
+        console.log(file.name);
+        const name = file.name.split(/(?=\.[^.]+$)/);
+        console.log(name);
+        name[0] = name[0].replace(/appName/, commander.appName);
+        name[0] = name[0].replace(/classNames/, inflector.pluralize(commander.className));
+        name[0] = name[0].replace(/className/, commander.className);
+        name[0] = name[0].replace(/classname/, commander.className.toLowerCase());
+        const filename = name.join('');
         if (file.isDirectory()) {
             makeDir(dist, filename);
             readdir(base, path.join(src, file.name), path.join(dist, filename));
         }
         else {
-            render(base, src, dist, filename);
+            render(base, path.join(src, file.name), path.join(dist, filename));
         }
     }
 }

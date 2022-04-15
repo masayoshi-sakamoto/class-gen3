@@ -7,7 +7,7 @@ _%>
 _%>
 <%_ if (fileName === 'path') {_%>
 /<%= prop.key %>/{id}:
-  $ref: './<%= key %>/path.yml'
+  $ref: './<%= prop.key %>/path.yml'
 <%_ } else if (fileName === 'paths') {_%>
 /<%= prop.key %>:
   $ref: './<%= prop.key %>/paths.yml'

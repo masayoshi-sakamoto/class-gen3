@@ -7,5 +7,5 @@ declare var pkg: any;
 declare function init(): void;
 declare function makeDir(src: string, filename: string): any;
 declare function generator(type: string): void;
-declare function render(base: string, src: string, dist: string, filename: string): void;
+declare function render(base: string, src: string, dist: string): void;
 declare function readdir(base: string, src: string, dist: string): void;

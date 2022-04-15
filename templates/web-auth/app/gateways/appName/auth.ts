@@ -1,10 +1,15 @@
 import { <%= appName %>GatewayBase } from './base'
 import { toAccountSeed } from './translator/account'
 import { toAuthProps } from './translator/auth'
-import { Login, Signup } from '@/infrastructure/network/<%= appName %>/requests/auth'
+import { Login, Refresh, Signup } from '@/infrastructure/network/<%= appName %>/requests/auth'
 import AccountEntity from '@/entities/Account'
 
 export default class Auth extends <%= appName %>GatewayBase {
+  async Refresh() {
+    const { auth } = await this.apiClient.request(new Refresh())
+    return toAuthProps(auth)
+  }
+
   async Signup(entity: AccountEntity) {
     const { auth } = await this.apiClient.request(new Signup(toAccountSeed(entity.props)))
     return toAuthProps(auth)
