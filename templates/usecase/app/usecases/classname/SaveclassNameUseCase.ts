@@ -1,16 +1,15 @@
 import { IApp } from '@/types/nuxt'
 import <%= className %>Entity from '@/entities/<%= className %>'
-import RefreshUseCase from '@/usecases/RefreshUseCase'
+import refresh from '@/utils/refresh'
 
-export default class Save<%= className %>UseCase extends RefreshUseCase implements BaseUseCase {
+export default class Save<%= className %>UseCase implements BaseUseCase {
   App: IApp
   constructor(app: IApp) {
-    super()
     this.App = app
   }
 
   async execute(entity: <%= className %>Entity) {
-    await super.refresh(this.App)
+    await refresh(this.App)
     await this.App.<%= appName.toLowerCase() %>Gateway.<%= className %>.Save<%= className %>(entity)
   }
 }

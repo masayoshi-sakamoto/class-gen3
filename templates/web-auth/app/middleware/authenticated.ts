@@ -1,12 +1,21 @@
 import { Context } from '@nuxt/types/app'
 import { Middleware } from '@nuxt/types'
+import refresh from '@/utils/refresh'
 
-const authenticated: Middleware = ({ App, redirect }: Context) => {
+const authenticated: Middleware = async ({ App, route, redirect }: Context) => {
   if (App.auth.token) {
+    await refresh(App)
+    if (route.name === 'index') {
+      redirect('/home')
+    }
     return
   }
 
-  App.auth.clear()
+  if (route.name === 'index') {
+    return
+  }
+
+  App.auth.logout()
   redirect('/login')
 }
 

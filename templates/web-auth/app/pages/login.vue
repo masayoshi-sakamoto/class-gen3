@@ -43,7 +43,7 @@ export default Vue.extend({
   methods: {
     async save() {
       if (await new LoginUseCase(this.App).execute(this.value)) {
-        this.$router.push('/')
+        this.$router.push('/home')
       }
     }
   }

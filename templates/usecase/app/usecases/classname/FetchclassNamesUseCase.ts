@@ -1,15 +1,14 @@
 import { IApp } from '@/types/nuxt'
-import RefreshUseCase from '@/usecases/RefreshUseCase'
+import refresh from '@/utils/refresh'
 
-export default class Fetch<%= classNames %>UseCase extends RefreshUseCase implements BaseUseCase {
+export default class Fetch<%= classNames %>UseCase implements BaseUseCase {
   App: IApp
   constructor(app: IApp) {
-    super()
     this.App = app
   }
 
   async execute() {
-    await super.refresh(this.App)
+    await refresh(this.App)
     const response = await this.App.<%= appName.toLowerCase() %>Gateway.<%= className %>.Fetch<%= classNames %>(this.App.<%= className.toLowerCase() %>.options)
     this.App.<%= className.toLowerCase() %>.store(response.items)
     this.App.<%= className.toLowerCase() %>.query = response.query

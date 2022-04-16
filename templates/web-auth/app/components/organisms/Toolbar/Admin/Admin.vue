@@ -1,23 +1,18 @@
 <template>
   <v-app-bar app color="white" elevate-on-scroll>
-    <v-container fluid>
-      <v-row>
-        <v-col align-self="center" class="logo-lg">
-          <Logo></Logo>
-        </v-col>
-      </v-row>
-    </v-container>
+    <v-spacer></v-spacer>
+    <Avatar></Avatar>
   </v-app-bar>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { menus } from '@/entities/Menu'
-import Logo from '@/components/molecules/Logo'
+import Avatar from '@/components/molecules/Avatar'
 
 export default Vue.extend({
   components: {
-    Logo
+    Avatar
   },
   data() {
     return {

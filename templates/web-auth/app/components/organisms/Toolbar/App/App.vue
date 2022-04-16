@@ -2,8 +2,8 @@
   <v-app-bar app color="white" elevate-on-scroll>
     <v-container fluid>
       <v-row>
-        <v-col cols="3" align-self="center" class="logo-lg">
-          <nuxt-link to="/"><%= appName %></nuxt-link>
+        <v-col cols="3" align-self="center">
+          <Logo></Logo>
         </v-col>
         <v-col cols="6">
           <v-tabs centered>
@@ -11,7 +11,7 @@
           </v-tabs>
         </v-col>
         <v-col cols="3" align-self="center" class="text-right">
-          <v-btn text to="/login">ログイン</v-btn>
+          <v-btn text to="/home">ログイン</v-btn>
           <v-btn rounded depressed min-width="100" color="primary" to="/signup">登録</v-btn>
         </v-col>
       </v-row>
@@ -22,8 +22,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import { menus } from '@/entities/Menu'
+import Logo from '@/components/molecules/Logo'
 
 export default Vue.extend({
+  components: {
+    Logo
+  },
   data() {
     return {
       menus

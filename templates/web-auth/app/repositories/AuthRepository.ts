@@ -12,7 +12,7 @@ export default class AppRepository {
     this.store = store
   }
 
-  clear() {
+  logout() {
     this.auth = null
   }
 
