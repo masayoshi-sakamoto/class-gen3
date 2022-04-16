@@ -10,7 +10,7 @@ export default class Fetch<%= classNames %>UseCase implements BaseUseCase {
   async execute() {
     await refresh(this.App)
     const response = await this.App.<%= appName.toLowerCase() %>Gateway.<%= className %>.Fetch<%= classNames %>(this.App.<%= className.toLowerCase() %>.options)
-    this.App.<%= className.toLowerCase() %>.store(response.items)
+    this.App.<%= className.toLowerCase() %>.save(response.items)
     this.App.<%= className.toLowerCase() %>.query = response.query
     this.App.<%= className.toLowerCase() %>.options = {
       ...this.App.<%= className.toLowerCase() %>.options,
