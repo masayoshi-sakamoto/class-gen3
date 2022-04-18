@@ -64,16 +64,16 @@ export default class <%= className %>Repository {
     return Empty<%= className %>EntityFactory(this.store.state.<%= className.toLowerCase() %>.byIds[id])
   }
 
-  items(value: I <%= className %>Props[]) {
-    this.store.commit(new types.All(null))
-    this.store.commit(new types.All(value))
+  items(value: I<%= className %>Props[]) {
+    this.store.commit(new types.Selects(null))
+    this.store.commit(new types.Selects(value))
   }
 
   selects(empty?: string): { text: any; value: any }[] {
     const values: { text: any; value: any }[] = empty ? [{ text: empty, value: null }] : []
     return values.concat(
       this.store.state.template.all.map((prop) => {
-        const entity = Empty <%= className %>EntityFactory(prop)
+        const entity = Empty<%= className %>EntityFactory(prop)
         return { text: entity.title, value: entity.id }
       })
     )
