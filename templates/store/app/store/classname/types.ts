@@ -24,9 +24,9 @@ export class Store implements FluxStandardAction<I<%= className %>Props[] | null
   constructor(public payload: I<%= className %>Props[] | null) {}
 }
 
-export class Selects implements FluxStandardAction<I <%= className %>Props[] | null> {
+export class Selects implements FluxStandardAction<I<%= className %>Props[] | null> {
   type = path + Types.selects
-  constructor(public payload: I <%= className %>Props[] | null) {}
+  constructor(public payload: I<%= className %>Props[] | null) {}
 }
 
 export class Query implements FluxStandardAction<IQueryProps> {
