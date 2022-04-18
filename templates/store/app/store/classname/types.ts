@@ -5,6 +5,7 @@ import { IQueryProps } from '@/entities/Query'
 export const Types = {
   clear: 'clear',
   store: 'store',
+  selects: 'selects',
   query: 'query',
   options: 'options',
   loading: 'loading',
@@ -21,6 +22,11 @@ export class Clear implements FluxStandardAction<void> {
 export class Store implements FluxStandardAction<I<%= className %>Props[] | null> {
   type = path + Types.store
   constructor(public payload: I<%= className %>Props[] | null) {}
+}
+
+export class Selects implements FluxStandardAction<I <%= className %>Props[] | null> {
+  type = path + Types.selects
+  constructor(public payload: I <%= className %>Props[] | null) {}
 }
 
 export class Query implements FluxStandardAction<IQueryProps> {

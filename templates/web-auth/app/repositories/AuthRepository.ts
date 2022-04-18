@@ -20,13 +20,13 @@ export default class AppRepository {
     if (value) {
       // トークンの利用可能時間を保存
       const date = new Date().getTime() + 1000 * 60 * Number(value.expired)
-      this.cookies.set('accessToken', value.accessToken, { maxAge: 60 * 60 * 24 * 14 }) // 2週間
-      this.cookies.set('tokenType', value.tokenType, { maxAge: 60 * 60 * 24 * 14 }) // 2週間
-      this.cookies.set('expired', date, { maxAge: 60 * 60 * 24 * 14 }) // 2週間
+      this.cookies.set('accessToken', value.accessToken, { path: '/', maxAge: 60 * 60 * 24 * 14 }) // 2週間
+      this.cookies.set('tokenType', value.tokenType, { path: '/', maxAge: 60 * 60 * 24 * 14 }) // 2週間
+      this.cookies.set('expired', date, { path: '/', maxAge: 60 * 60 * 24 * 14 }) // 2週間
     } else {
-      this.cookies.remove('accessToken', { maxAge: 1 })
-      this.cookies.remove('tokenType', { maxAge: 1 })
-      this.cookies.remove('expired', { maxAge: 1 })
+      this.cookies.remove('accessToken', { path: '/', maxAge: 1 })
+      this.cookies.remove('tokenType', { path: '/', maxAge: 1 })
+      this.cookies.remove('expired', { path: '/', maxAge: 1 })
     }
   }
 

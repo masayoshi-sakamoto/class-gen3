@@ -32,11 +32,11 @@ export const headers = [
   { text: 'タイトル', value: 'title' }
 ]
 
-export const Empty<%= className %>PropsFactory = (props?: Partial<I<%= className %>Props>): I<%= className %>Props => ({
+export const Empty<%= className %>PropsFactory = (props?: Partial<I<%= className %>Props> | null): I<%= className %>Props => ({
   title: null,
   ...props
 })
 
-export const Empty<%= className %>EntityFactory = (props?: Partial<I<%= className %>Props>): <%= className %>Entity => {
+export const Empty<%= className %>EntityFactory = (props?: Partial<I<%= className %>Props> | null): <%= className %>Entity => {
   return new <%= className %>Entity(Empty<%= className %>PropsFactory(props))
 }

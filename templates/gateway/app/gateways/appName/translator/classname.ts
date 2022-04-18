@@ -2,7 +2,7 @@
 import { <%= className %>, <%= className %>Seed } from '@/infrastructure/network/<%= appName %>/schema'
 import { I<%= className %>Props, Empty<%= className %>PropsFactory } from '@/entities/<%= className %>'
 
-export const to<%= className %>Props = (props: <%= className %>): I<%= className %>Props => {
+export const to<%= className %>Props = (props: <%= className %> | null | undefined): I<%= className %>Props => {
   if (!props) {
     return Empty<%= className %>PropsFactory()
   }

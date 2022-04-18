@@ -6,6 +6,7 @@ export interface I<%= className %>State {
   byIds: {
     [id: string]: I<%= className %>Props
   }
+  selects: I<%= className %>Props[]
   query: IQueryProps
   options: IOptionsProps
   loading: boolean
@@ -14,6 +15,7 @@ export interface I<%= className %>State {
 
 export const state = (): I<%= className %>State => ({
   byIds: {},
+  selects: [],
   query: EmptyQueryPropsFactory(),
   options: {},
   loading: false,
