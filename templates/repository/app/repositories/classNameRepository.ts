@@ -78,6 +78,7 @@ export default class <%= className %>Repository {
       })
     )
   }
+  
   clear() {
     this.store.commit(new types.Clear())
   }

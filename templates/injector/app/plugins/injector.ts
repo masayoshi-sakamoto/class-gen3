@@ -36,7 +36,7 @@ export default (ctx: Context) => {
     <%= word %>: new <%= repository %>(app.$cookies, store),
     <%_ }}); _%>
     <%_ gateways.forEach((gateway) => { _%>
-    <%= gateway.toLowerCase() %>Gateway: new <%= gateway %>Gateway(<%= gateway.toLowerCase() %>APIClient)
+    <%= gateway.toLowerCase() %>Gateway: new <%= gateway %>Gateway(<%= gateway.toLowerCase() %>APIClient),
     <%_ }); _%>
   }
 
@@ -50,7 +50,7 @@ export default (ctx: Context) => {
     <%= word %>: new <%= repository %>(app.$cookies, store),
     <%_ }}); _%>
     <%_ gateways.forEach((gateway) => { _%>
-    <%= gateway.toLowerCase() %>Gateway: new <%= gateway %>Gateway(<%= gateway.toLowerCase() %>APIClient)
+    <%= gateway.toLowerCase() %>Gateway: new <%= gateway %>Gateway(<%= gateway.toLowerCase() %>APIClient),
     <%_ }); _%>
   }
 }

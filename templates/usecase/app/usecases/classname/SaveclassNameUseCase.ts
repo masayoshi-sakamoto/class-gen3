@@ -9,7 +9,18 @@ export default class Save<%= className %>UseCase implements BaseUseCase {
   }
 
   async execute(entity: <%= className %>Entity) {
-    await refresh(this.App)
-    await this.App.<%= appName.toLowerCase() %>Gateway.<%= className %>.Save<%= className %>(entity)
+    try {
+      await refresh(this.App)
+      await this.App.<%= appName.toLowerCase() %>Gateway.<%= className %>.Save<%= className %>(entity)
+    } catch (exception: any) {
+      if (exception.statusCode === 422 || exception.statusCode === 429) {
+        this.App.state.errors = exception.errors
+      } else {
+        throw exception
+      }
+      return false
+    }
+    return true
+
   }
 }
