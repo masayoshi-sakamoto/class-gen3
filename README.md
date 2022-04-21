@@ -1,7 +1,7 @@
 # Install
 
 ```sh
-$ yarn add -D @masayoshi-sakamoto/class-gen2
+$ yarn add -D @masayoshi-sakamoto/class-gen3
 ```
 
 # License

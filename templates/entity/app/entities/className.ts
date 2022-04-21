@@ -15,7 +15,7 @@ export default class <%= className %>Entity {
   }
 
   get clone(): <%= className %>Entity {
-    return new <%= className %>Entity({ ...this._props })
+    return new <%= className %>Entity(JSON.parse(JSON.stringify(this._props)))
   }
 
   get id(): string | undefined {

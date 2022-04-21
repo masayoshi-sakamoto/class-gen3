@@ -72,7 +72,7 @@ export default class <%= className %>Repository {
   selects(empty?: string): { text: any; value: any }[] {
     const values: { text: any; value: any }[] = empty ? [{ text: empty, value: null }] : []
     return values.concat(
-      this.store.state.template.selects.map((prop) => {
+      this.store.state.<%= className.toLowerCase() %>.selects.map((prop) => {
         const entity = Empty<%= className %>EntityFactory(prop)
         return { text: entity.title, value: entity.id }
       })
