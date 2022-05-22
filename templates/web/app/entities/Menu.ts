@@ -100,3 +100,12 @@ export const menus: MenuEntity[] = [
     to: { name: 'contact' }
   })
 ]
+
+export const admins: MenuEntity[] = []
+
+export const subs: MenuEntity[] = [
+  EmptyMenuEntityFactory({
+    id: 'profile',
+    title: 'プロフィール'
+  })
+]
